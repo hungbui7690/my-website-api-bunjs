@@ -6,6 +6,7 @@ class NotFoundError extends CustomAPIError {
   constructor(message: any) {
     super(message)
     this.statusCode = StatusCodes.NOT_FOUND
+    this.name = 'NotFound Error'
   }
 }
 

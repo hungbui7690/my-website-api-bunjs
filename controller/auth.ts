@@ -32,11 +32,18 @@ const register = async (req: Request, res: Response) => {
   const userID = user._id
 
   // generate accessToken & refreshToken + attach to cookies
-  const { accessToken, userToken } = await createTokens({ userID, req, res })
+  const { accessToken } = await createTokens({
+    userID,
+    username,
+    req,
+    res,
+  })
 
-  res
-    .status(StatusCodes.OK)
-    .json({ username, userID, password: hashedPassword, accessToken })
+  res.status(StatusCodes.OK).json({
+    username,
+    userID,
+    accessToken,
+  })
 }
 
 const login = async (req: Request, res: Response) => {
@@ -63,7 +70,12 @@ const login = async (req: Request, res: Response) => {
   const userID = user._id
 
   // generate accessToken & refreshToken + attach to cookies
-  const { accessToken, userToken } = await createTokens({ userID, req, res })
+  const { accessToken } = await createTokens({
+    userID,
+    username,
+    req,
+    res,
+  })
 
   res.status(StatusCodes.OK).json({ username, userID, accessToken })
 }
@@ -86,29 +98,21 @@ const generateNewToken = async (req: Request, res: Response) => {
   if (!dbToken || dbToken !== clientRefreshToken)
     throw new UnauthorizedError('refreshToken is invalid!!')
 
-  const { accessToken, userToken } = await createTokens({ userID, req, res })
+  const { accessToken } = await createTokens({
+    userID,
+    username,
+    req,
+    res,
+  })
 
-  res.status(StatusCodes.OK).json({ username, accessToken })
+  res.status(StatusCodes.OK).json({ userID, username, accessToken })
 }
 
 const logout = async (req: Request, res: Response) => {
-  res.cookie('accessToken', 'logout', {
-    httpOnly: true,
-    expires: new Date(Date.now()),
-    secure: process.env.NODE_ENV === 'production',
-    signed: true,
-    domain: 'localhost',
-    sameSite: process.env.NODE_ENV === 'production' && 'none',
-  })
+  const { userID } = req.body
 
-  res.cookie('refreshToken', 'logout', {
-    httpOnly: true,
-    expires: new Date(Date.now()),
-    secure: process.env.NODE_ENV === 'production',
-    signed: true,
-    domain: 'localhost',
-    sameSite: process.env.NODE_ENV === 'production' && 'none',
-  })
+  // add or update refreshToken in DB
+  await Token.findOneAndDelete({ user: userID })
 
   res.status(StatusCodes.OK).json({ msg: 'user logged out' })
 }

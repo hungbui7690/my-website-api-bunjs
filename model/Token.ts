@@ -1,7 +1,7 @@
 import mongoose, { Schema, type InferSchemaType, model, Types } from 'mongoose'
 
 interface IToken {
-  refreshToken: string
+  accessToken: string
   ip?: string
   userAgent: string
   isValid?: boolean
@@ -10,7 +10,7 @@ interface IToken {
 
 const tokenSchema = new Schema<IToken>(
   {
-    refreshToken: {
+    accessToken: {
       type: String,
       required: true,
     },

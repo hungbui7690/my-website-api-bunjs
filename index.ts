@@ -3,7 +3,6 @@
 // @ts-ignore
 import { xss } from 'express-xss-sanitizer'
 import express from 'express'
-import cookieParser from 'cookie-parser'
 import 'express-async-errors'
 import path from 'path'
 import morgan from 'morgan'
@@ -18,7 +17,6 @@ import connectDB from './db/connect'
 import postRoute from './routes/post'
 import authRoute from './routes/auth'
 import tagRoute from './routes/tag'
-import cookieRoute from './routes/testCookies'
 import notFoundMiddleware from './middleware/not-found'
 import errorHandlerMiddleware from './middleware/error-handler'
 const app = express()
@@ -43,18 +41,12 @@ cloudinary.config({
 })
 
 app.use(express.json())
-app.use(
-  cors({
-    origin: true,
-    // origin: process.env.FRONTEND_URL,
-    credentials: true, //access-control-allow-credentials:true
-  })
-)
+app.use(cors({}))
 app.use(fileUpload({ useTempFiles: true }))
 app.use(express.static('public'))
 app.use('/static', express.static(path.join(__dirname, 'public', 'images'))) // http://localhost:5000/static/default-image.png
 app.use(morgan('tiny'))
-app.use(cookieParser(process.env.JWT_SECRET))
+// app.use(cookieParser(process.env.JWT_SECRET))
 app.use(helmet())
 app.use(xss())
 app.use(mongoSanitize())
@@ -62,39 +54,10 @@ app.set('trust proxy', 1)
 app.use(limiter)
 app.use(xss(xssOptions))
 
-app.get('/ip', (req, res) => {
-  res.json({ ip: req.ip })
-})
-
-app.get('/ping', (req, res) => {
-  let testToken = ''
-  const oneDay = 1000 * 60 * 60 * 24
-  testToken = crypto.randomBytes(40).toString('hex')
-
-  res.cookie('testToken', testToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + oneDay),
-    secure: process.env.NODE_ENV === 'production',
-    signed: true,
-  })
-
-  res.json({ msg: '🏓 Pong!!', testToken })
-})
-
-app.get('/cookies', function (req, res) {
-  console.log('Cookies: ', req.cookies)
-  console.log('Signed Cookies: ', req.signedCookies)
-
-  res
-    .status(200)
-    .json({ cookies: req.cookies, signedCookies: req.signedCookies })
-})
-
 // routes
 app.use('/api/v1/tag', tagRoute)
 app.use('/api/v1/post', postRoute)
 app.use('/api/v1/auth', authRoute)
-app.use('/', cookieRoute)
 
 // middlewares
 app.use(notFoundMiddleware)

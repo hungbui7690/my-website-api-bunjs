@@ -2,9 +2,11 @@ import { type Request, type Response } from 'express'
 import { Post, type SchemaPost } from '../model/Post'
 import { BadRequestError } from '../errors'
 import { StatusCodes } from 'http-status-codes'
-import { type Query } from 'express-serve-static-core'
+import { type UserRequest, type ICustomRequestQuery } from '../types'
 
 export const createPost = async (req: Request, res: Response) => {
+  const { accessToken } = (req as UserRequest).user
+
   const { title, description, github, featured, url, tags, image } = req.body
   if (!title || !description || !github || !tags)
     throw new BadRequestError('Please provide all information.')
@@ -20,26 +22,22 @@ export const createPost = async (req: Request, res: Response) => {
   })
   await post.save()
 
-  res.status(StatusCodes.CREATED).json(post)
-}
-
-// #
-interface ICustomRequestQuery extends Query {
-  tags: string
+  res.status(StatusCodes.CREATED).json({ post, accessToken })
 }
 
 export const getAllPosts = async (req: Request, res: Response) => {
   const { tags } = req.query as ICustomRequestQuery // #
+
   const queryObject: any = {} // #
   let tagsList
   let result
 
   if (tags) {
-    tagsList = tags.split(',')
-    queryObject.tags = { $all: tagsList }
-
     // Method 1
     // result = await Post.find().all('tags', tagsList || [])
+
+    tagsList = tags.split(',')
+    queryObject.tags = { $all: tagsList }
   }
 
   // Method 2
@@ -60,31 +58,36 @@ export const getAllPosts = async (req: Request, res: Response) => {
 }
 
 export const updatePost = async (req: Request, res: Response) => {
+  const { accessToken } = (req as UserRequest).user
   const { id } = req.params
   const post = await Post.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
   })
   if (!post) {
-    res.status(StatusCodes.NOT_FOUND).json()
+    res.status(StatusCodes.NOT_FOUND).json({ msg: "Project wasn't found" })
   }
-  res.status(StatusCodes.OK).json(post)
+  res.status(StatusCodes.OK).json({ post, accessToken })
 }
 
 export const getSinglePost = async (req: Request, res: Response) => {
+  const { accessToken } = (req as UserRequest).user
   const { id } = req.params
   const post = await Post.findById(id)
   if (!post) {
     res.status(StatusCodes.NOT_FOUND).json({ msg: `No project with ID ${id}` })
   }
-  res.status(StatusCodes.OK).json(post)
+  res.status(StatusCodes.OK).json({ post, accessToken })
 }
 
 export const deletePost = async (req: Request, res: Response) => {
+  const { accessToken } = (req as UserRequest).user
   const { id } = req.params
   const post = await Post.findByIdAndDelete(id)
   if (!post) {
     res.status(StatusCodes.NOT_FOUND).json({ msg: `No project with ID ${id}` })
   }
-  res.status(StatusCodes.OK).json({ msg: `Post with ID ${id} was deleted` })
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: `Post with ID ${id} was deleted`, accessToken })
 }
