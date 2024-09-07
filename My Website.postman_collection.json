@@ -1,0 +1,489 @@
+{
+	"info": {
+		"_postman_id": "c8bb928b-1d19-4d93-814e-966bd01d0875",
+		"name": "My Website",
+		"description": "API for my website",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13813451"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						},
+						"description": "### Register User\n\nThe `POST` request is used to register a new user.\n\n#### Request Body\n\n- `username` (string, required): The username of the new user.\n    \n- `password` (string, required): The password for the new user.\n    \n\n#### Response\n\nThe response for this request is a JSON schema representing the structure of the response object.  \nThe specific details of the response schema will depend on the server's implementation."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "# Auth Login\n\nThis endpoint is used to authenticate a user and obtain an access token for subsequent API calls.\n\n## Request\n\n- Method: POST\n    \n- URL: `http://localhost:5000/api/v1/auth/login`\n    \n- Headers:\n    \n    - Content-Type: application/json\n        \n- Body:\n    \n    - username (string, required): The username of the user.\n        \n    - password (string, required): The password of the user.\n        \n\n## Response\n\nThe response of this request is a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"token\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```\n\nThe response contains a `token` which is a string representing the access token for the authenticated user."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "The API endpoint allows users to log out by sending an HTTP POST request to the specified URL. Upon successful logout, the response will be in JSON format and will follow a schema that can be documented for reference."
+					},
+					"response": []
+				}
+			],
+			"description": "Routes for Login / Register"
+		},
+		{
+			"name": "General",
+			"item": [
+				{
+					"name": "Ping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/ping",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"ping"
+							]
+						},
+						"description": "### Ping Endpoint\n\nThis endpoint sends a GET request to the server to check if it is reachable.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response Body\n\nThe response will indicate the status of the server. It will confirm if the server is reachable or not."
+					},
+					"response": []
+				},
+				{
+					"name": "IP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/ip",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"ip"
+							]
+						},
+						"description": "This endpoint makes an HTTP GET request to retrieve the IP address. The response is in JSON format and can be documented as a JSON schema.\n\nThe response schema for this request can be documented as follows:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"ip\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cookies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								""
+							]
+						},
+						"description": "This endpoint sends an HTTP GET request to [http://localhost:5000/](http://localhost:5000/). The response of this request can be documented as a JSON schema."
+					},
+					"response": []
+				}
+			],
+			"description": "For testing routes"
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Upload Post Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image-upload",
+									"type": "file",
+									"src": "/C:/Users/7hanhHung/Downloads/photos.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/post/uploadImage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"post",
+								"uploadImage"
+							]
+						},
+						"description": "### Upload Image\n\nThe `uploadImage` endpoint allows you to upload an image.\n\n#### Request Body\n\n- `image-upload` (file): The image file to be uploaded.\n    \n\n#### Response\n\nThe response is a JSON object with the following schema:\n\n``` json\n{\n    \"image_src\": \"string\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"title5\",\r\n    \"description\":\"description5\",\r\n    \"featured\": false,\r\n    \"github\":\"github5\",\r\n    \"url\" : \"url5\",\r\n    \"tags\" : [\"bunjs\", \"typescript\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/post",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"post"
+							]
+						},
+						"description": "# POST /api/v1/post\n\nThis endpoint allows the client to create a new post.\n\n## Request\n\nThe request should be sent as an HTTP POST to the specified URL. The request body should be in JSON format and include the following parameters:\n\n- `title` (string, required): The title of the post.\n    \n- `description` (string, required): The description of the post.\n    \n- `featured` (boolean, required): Indicates if the post is featured.\n    \n- `github` (string, optional): The GitHub link related to the post.\n    \n- `url` (string, optional): The URL related to the post.\n    \n- `tags` (array of strings, required): The tags associated with the post.\n    \n\nExample:\n\n``` json\n{\n  \"title\": \"Sample Title\",\n  \"description\": \"Sample Description\",\n  \"featured\": true,\n  \"github\": \"https://github.com/sample\",\n  \"url\": \"https://sample.com\",\n  \"tags\": [\"sample\", \"example\"]\n}\n## Response\nThe response will be in JSON format and will include the schema for the response body.\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/post",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"post"
+							]
+						},
+						"description": "This endpoint makes an HTTP GET request to retrieve all post from the API. The response of this request is documented as a JSON schema below:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"postId\": {\n      \"type\": \"string\"\n    },\n    \"title\": {\n      \"type\": \"string\"\n    },\n    \"content\": {\n      \"type\": \"string\"\n    },\n    \"author\": {\n      \"type\": \"string\"\n    },\n    \"createdAt\": {\n      \"type\": \"string\",\n      \"format\": \"date-time\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Posts with Tags",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/post?tags=react,nodeJS",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"post"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": "react,nodeJS"
+								}
+							]
+						},
+						"description": "This endpoint makes an HTTP GET request to retrieve posts based on the provided tags. The request should include the tags as query parameters in the URL.\n\n### Response\n\nThe response of this request is a JSON object representing the posts that match the provided tags. To document the response as a JSON schema, the structure of the JSON object should be defined with the appropriate properties, their data types, and any required or optional fields."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"title2\",\r\n    \"description\":\"description1\",\r\n    \"featured\": false,\r\n    \"github\":\"github1\",\r\n    \"url\" : \"url1\",\r\n    \"tags\" : [\"react\", \"nodeJS\", \"typescript\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/post/66d7e54f69040bc12c9065a0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"post",
+								"66d7e54f69040bc12c9065a0"
+							]
+						},
+						"description": "This endpoint makes an HTTP PATCH request to update a specific post with the given ID. The request body should contain the fields to be updated, such as title, description, featured, github, url, and tags. The \"title\" and \"description\" fields are expected to be empty strings, \"featured\" is a boolean value, \"github\" and \"url\" are strings, and \"tags\" is an array of strings.\n\nThe response of this request is documented as a JSON schema."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"title2\",\r\n    \"description\":\"description1\",\r\n    \"featured\": false,\r\n    \"github\":\"github1\",\r\n    \"url\" : \"url1\",\r\n    \"tags\" : [\"react\", \"nodeJS\", \"typescript\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/post/66d7e54f69040bc12c9065a0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"post",
+								"66d7e54f69040bc12c9065a0"
+							]
+						},
+						"description": "This endpoint sends an HTTP DELETE request to [http://localhost:5000/api/v1/post/66d7e54f69040bc12c9065a0](http://localhost:5000/api/v1/post/66d7e54f69040bc12c9065a0) to delete a specific post. The request payload includes the title, description, featured status, GitHub link, URL, and tags of the post to be deleted.\n\n### Response\n\nThe response of this request is a JSON schema representing the structure of the response data."
+					},
+					"response": []
+				}
+			],
+			"description": "Use to modify Post"
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "Create Tag",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"react\",\r\n    \"color\": \"orange-600\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/tag",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"tag"
+							]
+						},
+						"description": "### Create a New Tag\n\nThis endpoint allows you to create a new tag.\n\n#### Request Body\n\n- `name` (string, required): The name of the tag.\n    \n- `color` (string, required): The color associated with the tag.\n    \n\n#### Response\n\nThe response for this request is a JSON object conforming to the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"name\": {\n      \"type\": \"string\"\n    },\n    \"color\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tags",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/tag",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"tag"
+							]
+						},
+						"description": "This endpoint sends an HTTP GET request to retrieve tag information from the API. The response for this request can be documented as a JSON schema."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Tag",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/tag/66d8b30ef324edb47c415ab0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"tag",
+								"66d8b30ef324edb47c415ab0"
+							]
+						},
+						"description": "The HTTP PATCH request is used to update an existing tag with the specified ID. The request should be sent to [http://localhost:5000/api/v1/tag/66d8b30ef324edb47c415ab0](http://localhost:5000/api/v1/tag/66d8b30ef324edb47c415ab0).\n\nThe response of this request can be documented as a JSON schema to describe the structure of the data that will be returned. The JSON schema will provide a clear understanding of the properties and their types in the response data."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Tag",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/tag/66d8b30ef324edb47c415ab0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"tag",
+								"66d8b30ef324edb47c415ab0"
+							]
+						},
+						"description": "This endpoint sends an HTTP DELETE request to remove a specific tag with the given ID. Upon successful deletion, the response will include a JSON schema representing the deleted tag."
+					},
+					"response": []
+				}
+			],
+			"description": "Use to manipulate Tag of the Post"
+		}
+	]
+}
