@@ -41,7 +41,12 @@ cloudinary.config({
 })
 
 app.use(express.json())
-app.use(cors({}))
+app.use(
+  cors({
+    origin: ['http://localhost:5147', 'https://hungbui.com'],
+    credentials: true,
+  })
+)
 app.use(fileUpload({ useTempFiles: true }))
 app.use(express.static('public'))
 app.use('/static', express.static(path.join(__dirname, 'public', 'images'))) // http://localhost:5000/static/default-image.png
