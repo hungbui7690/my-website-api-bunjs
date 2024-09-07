@@ -27,10 +27,11 @@ export const createTokens = async ({ userID, req, res }: ITokenInfo) => {
     expires: new Date(Date.now() + oneDay),
     secure: process.env.NODE_ENV === 'production',
     signed: true,
-    domain:
-      process.env.NODE_ENV === 'production'
-        ? process.env.PROD_URL
-        : 'localhost',
+    // domain:
+    //   process.env.NODE_ENV === 'production'
+    //     ? process.env.PROD_URL
+    //     : 'localhost',
+    domain: 'localhost',
     sameSite: process.env.NODE_ENV === 'production' && 'none',
   })
 
@@ -39,10 +40,11 @@ export const createTokens = async ({ userID, req, res }: ITokenInfo) => {
     expires: new Date(Date.now() + oneDay * 30),
     secure: process.env.NODE_ENV === 'production',
     signed: true,
-    domain:
-      process.env.NODE_ENV === 'production'
-        ? process.env.PROD_URL
-        : 'localhost',
+    // domain:
+    //   process.env.NODE_ENV === 'production'
+    //     ? process.env.PROD_URL
+    //     : 'localhost',
+    domain: 'localhost',
     sameSite: process.env.NODE_ENV === 'production' && 'none',
   })
 
