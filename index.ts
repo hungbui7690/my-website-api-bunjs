@@ -42,7 +42,11 @@ cloudinary.config({
 app.use(express.json())
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://hungbui.com'],
+    origin: [
+      'http://localhost:5173',
+      'https://hungbui.com',
+      'https://hungbui.netlify.app/',
+    ],
     credentials: true,
   })
 )
