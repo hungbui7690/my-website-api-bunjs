@@ -6,7 +6,6 @@ import express from 'express'
 import 'express-async-errors'
 import path from 'path'
 import morgan from 'morgan'
-import crypto from 'crypto'
 import helmet from 'helmet'
 import cors from 'cors'
 import { rateLimit } from 'express-rate-limit'
@@ -43,15 +42,14 @@ cloudinary.config({
 app.use(express.json())
 app.use(
   cors({
-    origin: ['http://localhost:5147', 'https://hungbui.com'],
+    origin: ['http://localhost:5173', 'https://hungbui.com'],
     credentials: true,
   })
 )
 app.use(fileUpload({ useTempFiles: true }))
 app.use(express.static('public'))
-app.use('/static', express.static(path.join(__dirname, 'public', 'images'))) // http://localhost:5000/static/default-image.png
+app.use('/static', express.static(path.join(__dirname, 'public', 'images')))
 app.use(morgan('tiny'))
-// app.use(cookieParser(process.env.JWT_SECRET))
 app.use(helmet())
 app.use(xss())
 app.use(mongoSanitize())
@@ -59,16 +57,13 @@ app.set('trust proxy', 1)
 app.use(limiter)
 app.use(xss(xssOptions))
 
-// routes
 app.use('/api/v1/tag', tagRoute)
 app.use('/api/v1/post', postRoute)
 app.use('/api/v1/auth', authRoute)
 
-// middlewares
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
-// start server
 const PORT = process.env.PORT || 5000
 const start = async () => {
   await connectDB()
