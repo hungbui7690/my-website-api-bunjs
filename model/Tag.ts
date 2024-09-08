@@ -1,6 +1,6 @@
 import { Schema, type InferSchemaType, model } from 'mongoose'
 
-interface ITag {
+export interface ITag {
   name: string
   colors: string[]
 }

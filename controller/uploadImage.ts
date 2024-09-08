@@ -14,13 +14,19 @@ export const uploadProductImage = async (req: Request, res: Response) => {
   }
 
   // console.log((req as FileRequest).files.file)
+  console.log((req as FileRequest).files)
+  console.log((req as FileRequest).files?.['image-upload']?.tempFilePath)
 
   const result = await cloudinary.uploader.upload(
-    (req as FileRequest).files?.file?.tempFilePath,
+    (req as FileRequest).files?.file?.tempFilePath ||
+      (req as FileRequest).files?.['image-upload']?.tempFilePath,
     options
   )
 
-  fs.unlinkSync((req as FileRequest).files?.file?.tempFilePath)
+  fs.unlinkSync(
+    (req as FileRequest).files?.file?.tempFilePath ||
+      (req as FileRequest).files?.['image-upload']?.tempFilePath
+  )
 
   return res.status(StatusCodes.OK).json({ image_src: result.secure_url })
 }

@@ -12,9 +12,9 @@ import { authenticateUser } from '../middleware/authentication'
 
 router.post('/uploadImage', uploadProductImage)
 router.post('/', authenticateUser, createTag)
-router.get('/', authenticateUser, getAllTags)
-router.get('/:id', authenticateUser, getSingleTag)
-router.patch('/:id', authenticateUser, updateTag)
-router.delete('/:id', authenticateUser, deleteTag)
+router.get('/', getAllTags)
+router.get('/:id', getSingleTag)
+// router.patch('/:id', authenticateUser, updateTag)
+// router.delete('/:id', authenticateUser, deleteTag)
 
 export default router

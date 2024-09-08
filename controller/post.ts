@@ -25,6 +25,20 @@ export const createPost = async (req: Request, res: Response) => {
   res.status(StatusCodes.CREATED).json({ post, accessToken })
 }
 
+export const getFeaturedPosts = async (req: Request, res: Response) => {
+  const posts = await Post.find({ featured: true })
+    .sort({
+      createdAt: -1,
+      _id: 1,
+    })
+    .limit(3)
+
+  if (!posts) {
+    res.status(StatusCodes.NOT_FOUND).json({ msg: `No featured projects` })
+  }
+  res.status(StatusCodes.OK).json({ posts })
+}
+
 export const getAllPosts = async (req: Request, res: Response) => {
   const { tags } = req.query as ICustomRequestQuery // #
 
@@ -41,7 +55,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
   }
 
   // Method 2
-  result = Post.find(queryObject).sort('createdAt _id')
+  result = Post.find(queryObject).sort({ createdAt: -1, _id: 1 })
 
   // Pagination
   // Example: we have 23 products & want to have 7 items each page
@@ -54,7 +68,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
 
   const posts = await result
 
-  res.status(StatusCodes.OK).json(posts)
+  res.status(StatusCodes.OK).json({ posts })
 }
 
 export const updatePost = async (req: Request, res: Response) => {

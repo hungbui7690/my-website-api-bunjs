@@ -1,4 +1,5 @@
-import { Schema, type InferSchemaType, model } from 'mongoose'
+import mongoose, { Schema, type InferSchemaType, model } from 'mongoose'
+import { type SchemaTag, type ITag } from './Tag'
 
 interface IPost {
   title: string
@@ -6,7 +7,7 @@ interface IPost {
   github: string
   featured?: boolean
   url?: string
-  tags: string[]
+  tags: (typeof mongoose.Schema.ObjectId)[]
   image?: string
   createdAt?: Date
   updatedAt?: Date
@@ -39,11 +40,12 @@ const postSchema = new Schema<IPost>(
       required: false,
     },
     tags: {
-      type: [],
+      type: [mongoose.Schema.ObjectId],
+      ref: 'Tag',
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
 
 export type SchemaPost = InferSchemaType<typeof postSchema>
